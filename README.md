@@ -19,6 +19,6 @@ Explanation of the scripts included in the repository:
 
 7). `U_matrix.m` is a function which computes the effect of the motion on 1 link/joint on the position and orientation of another link. It computes the matrix in the same way as `U1_matrix.m`.
 
-8). `inertia_matrix.m` is a function which computes the pseudo-inertia matrix/tensor of each link in the manipulator.
+8). `inertia_matrix.m` is a function which computes the pseudo-inertia matrix/tensor of each link in the manipulator. The mass moment of inertia for a link is calculated with respect to the frame the distal joint of the link.
 
 
