@@ -15,9 +15,9 @@ Explanation of the scripts included in the repository:
 
 5). `gravity_loading_matrix.m` is a function which calculates the gravity loading matrix, whose each term corresponds to the potential energy considerations of each link due to gravity. 
 
-6). `U1_matrix.m` is a function which computes the effect on the position and orientation of a particular link due to the motion of other 2 links. This is basically a matrix.
+6). `U1_matrix.m` is a function which computes the effect on the position and orientation of a particular link due to the motion of other 2 links. This is basically a matrix. The function basically computes all such possible matrices (for eg. the motion of the 2nd and 3rd joint in the manipulator won't have any effect on the position and orientation of the base joint, instead it would be the other way around) and groups them in a tensor (cell matrix) and returns the cell matrix when called in the main script.
 
-7). `U_matrix.m` is a function which computes the effect of the motion on 1 link/joint on the position and orientation of another link.
+7). `U_matrix.m` is a function which computes the effect of the motion on 1 link/joint on the position and orientation of another link. It computes the matrix in the same way as `U1_matrix.m`.
 
 8). `inertia_matrix.m` is a function which computes the pseudo-inertia matrix/tensor of each link in the manipulator.
 
