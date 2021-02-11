@@ -1,5 +1,5 @@
 # InvDynamics_Robotic_Manipulator_Euler-Lagrange_Formulation
-Inverse dynamics of a robotic manipulator of any DOF using _**Lagrange Euler Dynamic Formulation**_ (Energy Method). The inputs are the joint space variables (joint position, velocity and accelerations) and the outputs are the joint torques/forces.
+Inverse dynamics of a robotic manipulator of any DOF using _**Lagrange Euler Dynamic Formulation**_ (J. J. Uicker, "On the dynamic analysis of spatial linkages using 4 x 4 matrices," Ph.D. dissertation, Northwestern Univ., Aug. 1965). The inputs are the joint space variables (joint position, velocity and accelerations) and the outputs are the joint torques/forces.
 The code utilizes the distal DH parameters of the manipulator. As an example, the 3-axis SCARA robot has been taken with the all the links assumed to be thin cylinders and having zero cross inertias (Ixy = Iyz = Izx = 0).
 There is only one input file: a text file (`dhParamthreeAxisScara.txt`) which takes the distal DH parameters of the manipulator from the user and the joint velocities and accelerations also need to be input.
 
