@@ -26,4 +26,7 @@ Explanation of the scripts included in the repository:
 
 This formulation has a computational complexity of `O(N^4)`, thus making it computationally inefficient and unsuitable for applications like real time testinf of controller design, although, it is a highly structured algorithm.
 
+The validation of the dynamic model using the example of a 3 axis SCARA manipulator can be accessed from my [Projects Website](https://average-engineer.github.io/Projects-Website-Ashutosh-Mukherjee/)
+
+
 
