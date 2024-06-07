@@ -28,5 +28,10 @@ This formulation has a computational complexity of `O(N^4)`, thus making it comp
 
 The validation of the dynamic model using the example of a 3 axis SCARA manipulator can be accessed from my [Projects Website](https://average-engineer.github.io/Projects-Website-Ashutosh-Mukherjee/)
 
+## Symbolic Derivation of Dynamic Equations
+The equations of motion for a 2-Link manipulator have been symbolically derived using the MATLAB Symbolic Toolbox. The obtained symbolic expressions are verified using the equations given on Page 212 of *Fundamentals of Robotics: Analysis & Control* by Robert J. Schilling. 
+
+The script to be executed for obtaining the symbolic equations is `twoLink_Symbolic.m`. The parameters defined in this script can be modified based on the manipulator being analyzed.
+
 
 
