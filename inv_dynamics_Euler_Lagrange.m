@@ -10,6 +10,7 @@
 % For Prismatic Joint (Flag=0)
 %**************************************************************************
 % current computation time = 0.0948 seconds
+% Ashutosh Mukherjee
 %% SETTINGS
 clc
 clearvars
@@ -40,16 +41,16 @@ end
 % link widths
 w = zeros(NJ,1);
 
-%link lengths
+% link lengths
 link_length = zeros(NJ,1);
 for i = 1:NJ
 link_length(i) = 1;
 end
 
-%height of links
+% height of links
 H = zeros(NJ,1);
 
-%position of link i COM wrt to ith frame (right)
+% position of link i COM wrt to ith frame (right)
 for i = 1:NJ
     if flag(i) == 1
     r{i} = [-link_length(i)/2;0;0;1];
@@ -58,56 +59,57 @@ for i = 1:NJ
     end
 end
 
-%inertias
+% inertias
+% Inertias computed wrt the distal joints
 for i = 1:NJ
     if flag(i) == 1
-    Ixx(i) = (link_masses(i)*(w(i).^2 + H(i).^2)/3);
-    Iyy(i) = (link_masses(i)*(link_length(i).^2 + w(i).^2)/3);
-    Izz(i) = (link_masses(i)*(link_length(i).^2 + H(i).^2)/3);
-    Ixy(i) = -link_masses(i)*w(i)*link_length(i)/4 ;
-    Ixz(i) = -link_masses(i)*w(i)*H(i)/4;
-    Iyz(i) = -link_masses(i)*link_length(i)*H(i)/4;
+        Ixx(i) = (link_masses(i)*(w(i).^2 + H(i).^2)/12);
+        Iyy(i) = (link_masses(i)*(4*(link_length(i).^2) + w(i).^2)/12);
+        Izz(i) = (link_masses(i)*(4*(link_length(i).^2) + H(i).^2)/3);
+        Ixy(i) = -link_masses(i)*w(i)*link_length(i)/4 ;
+        Ixz(i) = -link_masses(i)*w(i)*H(i)/4;
+        Iyz(i) = -link_masses(i)*link_length(i)*H(i)/4;
     else
-    Izz(i) = (link_masses(i)*(w(i).^2 + H(i).^2)/3);
-    Iyy(i) = (link_masses(i)*(link_length(i).^2 + w(i).^2)/3);
-    Ixx(i) = (link_masses(i)*(link_length(i).^2 + H(i).^2)/3);
-    Ixy(i) = -link_masses(i)*w(i)*link_length(i)/4 ;
-    Ixz(i) = -link_masses(i)*w(i)*H(i)/4;
-    Iyz(i) = -link_masses(i)*link_length(i)*H(i)/4; 
+        Izz(i) = (link_masses(i)*(w(i).^2 + H(i).^2)/3);
+        Iyy(i) = (link_masses(i)*(link_length(i).^2 + w(i).^2)/3);
+        Ixx(i) = (link_masses(i)*(link_length(i).^2 + H(i).^2)/3);
+        Ixy(i) = -link_masses(i)*w(i)*link_length(i)/4 ;
+        Ixz(i) = -link_masses(i)*w(i)*H(i)/4;
+        Iyz(i) = -link_masses(i)*link_length(i)*H(i)/4;
     end
 end
 
-%velocities
+% velocities
 theta_dot = [0.5;0.25;0.125];
 theta_dot_dot = ones(NJ,1);
 
-%Acceleration due to gravity matrix
+% Acceleration due to gravity matrix
 gravity_acc = zeros(1,4);
 gravity_acc(3) = -9.81;
-%DATA FILES    
+% DATA FILES    
 inputFileDHP = 'dhParamthreeAxisScara.txt';
 
-%MEMORY ALLOCATION
+% MEMORY ALLOCATION
 A = zeros(4,4,NJ);% arm matrix
 
-% %% FUNCTION CALLS
+%% FUNCTION CALLS
 % Calculate homogeneous tranforms of each frame 
 tic
 [A] = ArmMatrix(A,inputFileDHP);
 
-%inertia matrix
+% inertia matrix
 J = inertia_matrix(Ixx,Iyy,Izz,Ixy,Ixz,Iyz,link_masses,r,NJ);
-%matrices for effect of the movement of one joint on other joint (Uij)
+% matrices for effect of the movement of one joint on other joint (Uij)
 U = U_matrix(A,NJ,flag);
-%matrices for effect of the movement of two joints on another joint (Uijk)
+% matrices for effect of the movement of two joints on another joint (Uijk)
 U1 = U1_matrix(A,NJ,flag);
-%dynamic coeffient matrices
-%inertial acceleration based matrix
+% dynamic coeffient matrices
+% inertial acceleration based matrix
 D = inertia_acceleration_matrix(U,J,NJ);
-%coroilis and centrifugal force matrix
+% coroilis and centrifugal force matrix
 h = centri_cor_force_matrix(U,U1,J,NJ,theta_dot);
-%gravity loading based matrix
+% gravity loading based matrix
 c = gravity_loading_matrix(link_masses,gravity_acc,U,r,NJ);
-%generalized torque matrix at each time instant
+% generalized torque matrix at each time instant
 torque = D*theta_dot_dot + h' + c'
 computing_time = toc;
