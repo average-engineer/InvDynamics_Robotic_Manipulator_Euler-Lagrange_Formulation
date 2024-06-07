@@ -50,7 +50,7 @@ end
 % height of links
 H = zeros(NJ,1);
 
-% position of link i COM wrt to ith frame (right)
+% position of link i COM wrt to ith frame (distal)
 for i = 1:NJ
     if flag(i) == 1
     r{i} = [-link_length(i)/2;0;0;1];

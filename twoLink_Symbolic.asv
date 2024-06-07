@@ -1,0 +1,48 @@
+%% Symbolic Derivation of 2-Link Manipulator using Euler-Lagrange Inverse Dynamics
+% Ashutosh Mukherjee
+% Requirement: MATLAB Symbolic Math Toolbox
+%% Settings
+clc
+clearvars
+close all
+format bank
+%% Assumptions
+% Links are assumed to be thin cylinders
+% Symmetry assumed such that cross-inertia terms are zero
+%% Dynamic Parameters
+% Number of Joints
+NJ = 2;
+% Link Masses
+syms m1 m2;
+link_masses = [m1;m2];
+% Link Lengths
+syms l1 l2;
+link_lengths = [l1;l2];
+% Distance of Link COM from distal joint
+for i = 1:NJ
+    r{i} = [-link_lengths(i)/2;0;0;1];
+end
+% Link Inertias
+for i = 1:NJ
+    Ixx(i) = 0;
+    Iyy(i) = link_masses(i)*(link_lengths(i)^2)/3;
+    Izz(i) = Iyy(i);
+    Ixy(i) = 0;
+    Ixz(i) = 0;
+    Iyz(i) = 0;
+end
+
+% Acceleration due to gravity vector
+syms g; % Acceleration due to gravity
+gravity_acc = [0,-g,0,0];
+
+%% Joint coordinates
+syms q1 q2 q1_d q2_d q1_dd q2_dd
+theta = [q1; q2];
+theta_dot = [q1_d;q2_d];
+theta_dot_dot = [q1_dd;q2_dd];
+%% Distal DH parameters
+% Angles between the Z-axes of joints
+alpha = zeros(NJ,1);
+
+
